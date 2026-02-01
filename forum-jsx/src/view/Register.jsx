@@ -19,14 +19,13 @@ function Register() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
-    // setError("");
 
     if (
       username.length < 6 ||
       username.length > 20 ||
       username.match(/[^a-zA-Z0-9_]/)
     ) {
-      setError(
+      toast.error(
         "Username must be 6-20 characters and can only contain letters, numbers, and underscores.",
       );
       setLoading(false);
@@ -37,7 +36,7 @@ function Register() {
       password.length > 20 ||
       password !== confirmPassword
     ) {
-      setError(`Your Password must be at least 6 characters ...`);
+      toast.error("Your Password must be at least 6 characters ...");
       setLoading(false);
       return;
     }
@@ -52,7 +51,6 @@ function Register() {
         email,
         password,
       );
-      console.log("User registered:", credentials.user);
       try {
         await set(ref(db, "users/" + credentials.user.uid), {
           uid: credentials.user.uid,
@@ -69,11 +67,7 @@ function Register() {
       setLoading(false);
       return;
     }
-    setSuccess(true);
     toast.success("Registration successful!");
-    if(error){
-      toast.error(error);
-    }
     setUsername("");
     setEmail("");
     setPassword("");
