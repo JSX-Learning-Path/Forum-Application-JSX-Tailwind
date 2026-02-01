@@ -3,6 +3,7 @@ import React from "react";
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { auth } from "../config/firebase-config.js";
 import { useNavigate } from "react-router-dom";
+import toast from "react-hot-toast";
 
 function Login() {
   const [email, setEmail] = useState("");
@@ -11,14 +12,13 @@ function Login() {
 
   const navigate = useNavigate();
   //add handle submit
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (e) => { 
     e.preventDefault();
-    setError("");
     try {
       await signInWithEmailAndPassword(auth, email, password);
       navigate("/home");
     } catch (error) {
-      setError(error.message);
+      toast.error(error.message);
     }
   };
 

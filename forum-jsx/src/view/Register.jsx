@@ -4,6 +4,7 @@ import { createUserWithEmailAndPassword } from "firebase/auth";
 import { set, ref } from "firebase/database";
 import { db, auth } from "../config/firebase-config"; // Make sure 'auth' is imported
 import { useNavigate } from "react-router-dom";
+import toast from "react-hot-toast";
 
 function Register() {
   const [username, setUsername] = useState("");
@@ -12,13 +13,13 @@ function Register() {
   const [confirmPassword, setConfirmPassword] = useState("");
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
-  const [success, setSuccess] = useState(false);
+  const [, setSuccess] = useState(false);
   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
-    setError("");
+    // setError("");
 
     if (
       username.length < 6 ||
@@ -41,7 +42,7 @@ function Register() {
       return;
     }
     if (!email.match(/^[^\s@]+@[^\s@]+\.[^\s@]+$/)) {
-      setError("Please enter a valid email address.");
+      toast.error("Please enter a valid email address.");
       setLoading(false);
       return;
     }
@@ -59,16 +60,20 @@ function Register() {
           createdAt: new Date().toISOString(),
         });
       } catch (error) {
-        setError("Failed to save user data. " + error.message);
+        toast.error("Failed to save user data. " + error.message);
         setLoading(false);
         return;
       }
     } catch (error) {
-      setError("Registration failed. " + error.code + ": " + error.message);
+      toast.error("Registration failed.  " + error.message);
       setLoading(false);
       return;
     }
     setSuccess(true);
+    toast.success("Registration successful!");
+    if(error){
+      toast.error(error);
+    }
     setUsername("");
     setEmail("");
     setPassword("");
@@ -125,7 +130,6 @@ function Register() {
         >
           {loading ? "Loading..." : "Register"}
         </button>
-        {error && <p style={{ color: "red" }}>{error}</p>}
       </form>
     </div>
   );
