@@ -1,11 +1,10 @@
 import { createContext, useContext } from "react";
 // undefined...
-export const AppContext = createContext("");
+export const AppContext = createContext({
+  isLoggedIn: false,
+  setIsLoggedIn: () => {},
+});
 
-export const useAppContext = () => {
-  const context = useContext(AppContext);
-  if (!context) {
-    throw new Error("useAppContext must be used within an AppContext.Provider");
-  }
-  return context;
-};
+export function useAppContext() {
+  return useContext(AppContext);
+}

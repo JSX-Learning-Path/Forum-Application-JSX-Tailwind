@@ -3,6 +3,7 @@ import { useState } from "react";
 import { createUserWithEmailAndPassword } from "firebase/auth";
 import { set, ref } from "firebase/database";
 import { db, auth } from "../config/firebase-config"; // Make sure 'auth' is imported
+import { useNavigate } from "react-router-dom";
 
 function Register() {
   const [username, setUsername] = useState("");
@@ -12,6 +13,7 @@ function Register() {
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
   const [success, setSuccess] = useState(false);
+  const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -72,6 +74,7 @@ function Register() {
     setPassword("");
     setConfirmPassword("");
     setLoading(false);
+    navigate("/home");
     return;
   };
 
