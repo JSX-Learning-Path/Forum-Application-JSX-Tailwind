@@ -1,12 +1,16 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Register from "./view/Register.jsx";
 import Home from "./view/Home.jsx";
-import React from "react";
+import Header from "./components/Header.jsx";
 import Create from "./view/Create.jsx";
 import Login from "./view/Login.jsx";
-import Header from "./components/Header.jsx";
+import React from "react";
+import toast, { Toaster } from "react-hot-toast";
 
 const App = () => {
+  const notify = () => {
+    toast.success("Welcome to the Forum App!");
+  };
   return (
     <BrowserRouter>
       <Header />
@@ -17,6 +21,10 @@ const App = () => {
         <Route path="/create" element={<Create />} />
         <Route path="/register" element={<Register />} />
       </Routes>
+      <div>
+        <button onClick={notify}>Make me a toast</button>
+        <Toaster />
+      </div>
     </BrowserRouter>
   );
 };

@@ -3,6 +3,7 @@ import { useAuthState } from "react-firebase-hooks/auth";
 import { db, auth } from "../config/firebase-config";
 import { ref, push } from "firebase/database";
 import React from "react";
+import toast from "react-hot-toast";
 
 function Create() {
   const [user] = useAuthState(auth);
@@ -11,32 +12,32 @@ function Create() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
 
-  const handleSubmit = async (e)=>{
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    if(title.trim() === "" || content.trim() === ""){
-        setError("Title and Content cannot be empty."); 
-        return;
+    if (title.trim() === "" || content.trim() === "") {
+      toast.error("Title and Content cannot be empty.");
+      return;
     }
     setLoading(true);
-    setError("");
-    try{
-      const postRef = ref(db,"posts")
-      await push(postRef,{
+    try {
+      const postRef = ref(db, "posts");
+      await push(postRef, {
         title,
         content,
         authorId: user?.uid || null,
         authorName: user?.displayName || "Anonymous",
-        createAt: new Date().toISOString()
+        createAt: new Date().toISOString(),
       });
       setTitle("");
       setContent("");
       setError("");
-    }catch(error){
-        setError(`Failed to create post. ${error.message}`);
+      toast.success("Post created successfully!");
+    } catch (error) {
+      setError(`Failed to create post. ${error.message}`);
     } finally {
-        setLoading(false);
+      setLoading(false);
     }
-  }
+  };
 
   return (
     <form onSubmit={handleSubmit} className="max-w-md mx-auto p-4">
@@ -54,7 +55,11 @@ function Create() {
         onChange={(e) => setContent(e.target.value)}
         className="w-full mb-2 p-2 border"
       />
-      <button type="submit" disabled={loading} className="px-4 py-2 bg-blue-500 text-white">
+      <button
+        type="submit"
+        disabled={loading}
+        className="px-4 py-2 bg-blue-500 text-white"
+      >
         {loading ? "Posting..." : "Post"}
       </button>
     </form>
