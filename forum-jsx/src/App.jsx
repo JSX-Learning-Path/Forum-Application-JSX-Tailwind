@@ -5,12 +5,14 @@ import Header from "./components/Header.jsx";
 import Create from "./view/Create.jsx";
 import Login from "./view/Login.jsx";
 import React from "react";
-import toast, { Toaster } from "react-hot-toast";
+import  { Toaster } from "react-hot-toast";
+import ProfileView from "./view/ProfileView.jsx";
+
 
 const App = () => {
-  const notify = () => {
-    toast.success("Welcome to the Forum App!");
-  };
+  // const notify = () => {
+  //   toast.success("Welcome to the Forum App!");
+  // };
   return (
     <BrowserRouter>
       <Header />
@@ -20,11 +22,12 @@ const App = () => {
         <Route path="/login" element={<Login />} />
         <Route path="/create" element={<Create />} />
         <Route path="/register" element={<Register />} />
+        <Route path="/profile" element={<ProfileView />} />
       </Routes>
-      <div>
-        <button onClick={notify}>Make me a toast</button>
+      {/* <div> */}
+        {/* <button onClick={notify}>Make me a toast</button> */}
         <Toaster />
-      </div>
+      {/* </div> */}
     </BrowserRouter>
   );
 };

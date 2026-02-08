@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { auth } from "../config/firebase-config.js";
 import { signOut } from "firebase/auth";
+import ProfileView from "../view/ProfileView.jsx";
 // import { useAppContext } from "../context/AppContext";
 
 function Header() {
@@ -16,8 +17,8 @@ function Header() {
   console.log("User in Header:", user);
   return (
     <header>
-      <nav className="bg-orange-100/60 p-4 ">
-        <ul className=" flex flex-row justify-around ">
+      <nav className="bg-teal-200/60 p-4 ">
+        <ul className=" flex flex-row ">
           <li>
             <Link to="/" className="">
               Home
