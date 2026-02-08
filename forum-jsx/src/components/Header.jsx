@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { auth } from "../config/firebase-config.js";
 import { signOut } from "firebase/auth";
+import ProfileView from "../view/ProfileView.jsx";
 // import { useAppContext } from "../context/AppContext";
 
 function Header() {
