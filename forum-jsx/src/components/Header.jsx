@@ -16,22 +16,30 @@ function Header() {
   console.log("User in Header:", user);
   return (
     <header>
-      <nav className="flex flex-col items-center justify-between p-4 bg-gray-400 text-white">
-        <ul>
+      <nav className="bg-orange-100/60 p-4 ">
+        <ul className=" flex flex-row justify-around ">
           <li>
-            <Link to="/">Home</Link>
+            <Link to="/" className="">
+              Home
+            </Link>
           </li>
-          
+
           <li>
-            <Link to="/register">Register</Link>
+            <Link to="/register" className="">
+              Register
+            </Link>
           </li>
           <li>
-            <Link to="/create">Create</Link>
+            <Link to="/create" className="">
+              Create
+            </Link>
           </li>
           {user ? (
-            <button onClick={handleLogOut}>LogOut</button>
+            <button onClick={handleLogOut}>Logout</button>
           ) : (
-            <Link to="/login">Login</Link>
+            <Link to="/login" className="">
+              Login
+            </Link>
           )}
         </ul>
       </nav>

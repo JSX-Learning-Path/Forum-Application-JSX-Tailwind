@@ -31,7 +31,7 @@ const Home = () => {
 
   if (loading) return <p className="loading-msg">Loading posts...</p>;
   return (
-    <div className="post-list-container">
+    <div className="">
       <h2>Posts</h2>
       {posts.length === 0 && <p className="empty-msg">No posts published.</p>}
       <div className="post-grid">

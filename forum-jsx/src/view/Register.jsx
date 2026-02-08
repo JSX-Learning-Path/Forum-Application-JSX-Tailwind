@@ -2,7 +2,7 @@ import React from "react";
 import { useState } from "react";
 import { createUserWithEmailAndPassword } from "firebase/auth";
 import { set, ref } from "firebase/database";
-import { db, auth } from "../config/firebase-config"; // Make sure 'auth' is imported
+import { db, auth } from "../config/firebase-config"; 
 import { useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
 
