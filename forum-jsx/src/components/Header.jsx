@@ -17,8 +17,8 @@ function Header() {
   console.log("User in Header:", user);
   return (
     <header>
-      <nav className="bg-orange-100/60 p-4 ">
-        <ul className=" flex flex-row justify-around ">
+      <nav className="bg-teal-200/60 p-4 ">
+        <ul className=" flex flex-row ">
           <li>
             <Link to="/" className="">
               Home
