@@ -1,10 +1,17 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { db, auth } from "../config/firebase-config";
-import { ref, push } from "firebase/database";
+import { ref, push, update} from "firebase/database";
 import React from "react";
 import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
+import { getUserByHandle } from "../service/users";
+import { getStorage } from "firebase/storage";
+import {
+  ref as storageRef,
+  uploadBytes,
+  getDownloadURL,
+} from "firebase/storage";
 
 function Create() {
   const navigate = useNavigate();
@@ -13,21 +20,71 @@ function Create() {
   const [content, setContent] = useState("");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
+  const [profilePicture, setProfilePicture] = useState("");
+  const [pictureFile, setPictureFile] = useState(null);
+  const [userData, setUserData] = useState(null);
+  // const [showEdit, setShowEdit] = useState(false);
+
+  useEffect(() => {
+    if (user?.uid) {
+      getUserByHandle(user.uid).then((snapshot) => {
+        const data = snapshot.exists() ? snapshot.val() : null;
+        setUserData(data);
+        // setBio(data?.bio || "");
+        setProfilePicture(data?.profilePicture || "");
+      });
+    }
+  }, [user]);
+      const handleUpload=(e)=>{
+      setPictureFile(e.target.files[0]);
+    }
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (title.trim() === "" || content.trim() === "") {
       toast.error("Title and Content cannot be empty.");
+       let profilePicUrl = profilePicture;
+          if (pictureFile) {
+            const storage = getStorage();
+            const picRef = storageRef(storage, `profilePictures/${user.uid}`);
+            await uploadBytes(picRef, pictureFile);
+            profilePicUrl = await getDownloadURL(picRef);
+          }
+          await update(ref(db, `/users/${user.uid}`), {
+            // bio: bio,
+            profilePicture: profilePicUrl,
+          });
+          setProfilePicture(profilePicUrl);
+          // setShowEdit(false);
+          setPictureFile(null);
       return;
     }
+
+    // const handleEdit = () => {
+    //   // setBio(userData?.bio || "");
+    //   setProfilePicture(userData?.profilePicture || "");
+    //   setShowEdit(true);
+    // };
+
+
+
     setLoading(true);
     try {
+      let postPictureUrl = "";
+      if (pictureFile) {
+        const storage = getStorage();
+        const picRef = storageRef(storage, `posts/${user.uid}_${Date.now()}`);
+        await uploadBytes(picRef, pictureFile);
+        postPictureUrl = await getDownloadURL(picRef);
+      }
       const postRef = ref(db, "posts");
       await push(postRef, {
         title,
         content,
         authorId: user?.uid || null,
-        authorName: user?.displayName || "Anonymous",
+        authorName: userData?.username || "Anonymous",
+        authorProfilePicture: userData?.profilePicture || "",
+        picture: postPictureUrl,
         createAt: new Date().toISOString(),
       });
       setTitle("");
@@ -58,6 +115,9 @@ function Create() {
         onChange={(e) => setContent(e.target.value)}
         className="w-full mb-2 p-2 border"
       />
+<button type="button" onC>
+<input type="file" accept="image/*" onChange={handleUpload}></input>
+</button>
       <button
         type="submit"
         disabled={loading}

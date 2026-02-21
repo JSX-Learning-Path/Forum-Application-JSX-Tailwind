@@ -9,7 +9,7 @@ import {
   uploadBytes,
   getDownloadURL,
 } from "firebase/storage";
-import { useNavigate } from "react-router-dom";
+// import { useNavigate } from "react-router-dom";
 
 function ProfileView() {
   const [user] = useAuthState(auth);
@@ -19,7 +19,7 @@ function ProfileView() {
   const [profilePicture, setProfilePicture] = useState("");
   const [pictureFile, setPictureFile] = useState(null);
 
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
 
   useEffect(() => {
     if (user?.uid) {
@@ -84,4 +84,3 @@ function ProfileView() {
   );
 }
 export default ProfileView;
-//profile picture , bio,username , email, list of posts, friends request , settings(edit profile , change password , delete account)

@@ -1,15 +1,27 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { auth } from "../config/firebase-config.js";
 import { signOut } from "firebase/auth";
-import ProfileView from "../view/ProfileView.jsx";
 import image from "../assets/image.png";
-// import { useAppContext } from "../context/AppContext";
+import { getUserByHandle } from "../service/users.js";
 
 function Header() {
   const [user] = useAuthState(auth);
+  // const [user] = useAuthState(auth);
+  const [userData, setUserData] = useState(null);
+  
 
+  useEffect(() => {
+    if (user?.uid) {
+      getUserByHandle(user.uid).then((snapshot) => {
+        const data = snapshot.exists() ? snapshot.val() : null;
+        setUserData(data);
+      });
+    }
+  }, [user]);
+
+  
   const handleLogOut = async () => {
     signOut(auth).catch(() => {
       console.log("Error logging out");
@@ -41,6 +53,29 @@ function Header() {
               Create
             </Link>
           </li>
+
+          {userData && userData.profilePicture ? (
+            <li>
+              <Link to="/profile" className="">
+                <img
+                  src={userData.profilePicture}
+                  alt="Profile"
+                  className="rounded-full w-10 h-10 object-cover border"
+                />
+              </Link>
+            </li>
+          ) : user ? (
+            <li>
+              <Link to="/profile" className="">
+                <img
+                  src={image}
+                  alt="Default Profile"
+                  className="rounded-full w-10 h-10 object-cover border"
+                />
+              </Link>
+            </li>
+          ) : null}
+          
           {user ? (
             <button onClick={handleLogOut}>Logout</button>
           ) : (

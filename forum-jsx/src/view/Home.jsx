@@ -1,13 +1,16 @@
 import React from "react";
 import { onValue, orderByChild, query, ref } from "firebase/database";
 import { useEffect, useState } from "react";
+// import { getAllPosts } from "../service/posts";
 import { db } from "../config/firebase-config";
+// import { getAuth } from "firebase/auth";
 
 const Home = () => {
   const [posts, setPosts] = useState([]);
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
+    // setLoading(true); // Add this line
     const postsRef = ref(db, "posts");
     const postsQuery = query(postsRef, orderByChild("createdAt"));
 
@@ -39,6 +42,9 @@ const Home = () => {
           <div key={post.id} className="post-card">
             <h3>{post.title}</h3>
             <p className="post-content">{post.content}</p>
+            {post.picture && (
+              <img src={post.picture} alt={post.title} className="post-image" />
+            )}
             <div className="post-meta">
               <small>Author: {post.authorName}</small>
               {post.createdAt && (
