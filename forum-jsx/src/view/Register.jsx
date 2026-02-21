@@ -2,9 +2,10 @@ import React from "react";
 import { useState } from "react";
 import { createUserWithEmailAndPassword } from "firebase/auth";
 import { set, ref } from "firebase/database";
-import { db, auth } from "../config/firebase-config"; 
+import { db, auth } from "../config/firebase-config";
 import { useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
+import Socials from "../buttons/SignWithSocials";
 
 function Register() {
   const [username, setUsername] = useState("");
@@ -78,52 +79,58 @@ function Register() {
   };
 
   return (
-    <div className="max-w-md mx-auto p-4 bg-gray-200 rounded flex flex-col gap-5">
+    <div className="flex max-w-md mx-auto p-4 bg-sky-100  flex-col gap-5 rounded ">
       <h1 className="text-center text-3xl ">Register</h1>
-      <form onSubmit={handleSubmit}>
+      <p className="text-center">It's free and easy</p>
+      <form onSubmit={handleSubmit} className="m-5">
         <label className="text-center">Username:</label>
         <input
           type="text"
           value={username}
+          placeholder="Username"
           onChange={(e) => setUsername(e.target.value)}
           required
-          className="mb-3 p-2  w-full bg-amber-50 rounded hover:bg-amber-100"
+          className="mb-3 p-2  w-full  bg-white"
         />
         <br />
         <label>Email:</label>
         <input
           type="email"
           value={email}
+          placeholder=" Type your email Email"
           onChange={(e) => setEmail(e.target.value)}
           required
-          className="mb-3 p-2  w-full bg-amber-50 rounded hover:bg-amber-100"
+          className="mb-3 p-2  w-full bg-white"
         />
         <br />
         <label>Password:</label>
         <input
           type="password"
           value={password}
+          placeholder=" Type your password"
           onChange={(e) => setPassword(e.target.value)}
           required
-          className="mb-3 p-2  w-full bg-amber-50 rounded hover:bg-amber-100"
+          className="mb-3 p-2  w-full bg-white"
         />
         <br />
         <label>Confirm Password:</label>
         <input
           type="password"
           value={confirmPassword}
+          placeholder="Confirm Password"
           onChange={(e) => setConfirmPassword(e.target.value)}
           required
-          className="mb-3 p-2  w-full bg-amber-50 rounded hover:bg-amber-100"
+          className="mb-3 p-2  w-full bg-white"
         />
         <br />
         <button
           type="submit"
           disabled={loading}
-          className="bg-stone-400 text-white font-bold py-2 px-4 rounded w-full transition-all duration-400 text-lg cursor-pointer"
+          className="bg-sky-600/70 text-white font-bold py-2 px-4 rounded w-full transition-all duration-400 text-lg cursor-pointer"
         >
           {loading ? "Loading..." : "Register"}
         </button>
+        <Socials />
       </form>
     </div>
   );

@@ -9,6 +9,7 @@ import {
   uploadBytes,
   getDownloadURL,
 } from "firebase/storage";
+import { useNavigate } from "react-router-dom";
 
 function ProfileView() {
   const [user] = useAuthState(auth);
@@ -17,6 +18,8 @@ function ProfileView() {
   const [showEdit, setShowEdit] = useState(false);
   const [profilePicture, setProfilePicture] = useState("");
   const [pictureFile, setPictureFile] = useState(null);
+
+  const navigate = useNavigate();
 
   useEffect(() => {
     if (user?.uid) {
@@ -57,7 +60,7 @@ function ProfileView() {
   };
 
   return (
-    <div className="p-4">
+    <div className="bg-grey-200">
       {userData && <button onClick={handleEdit}>Edit Bio</button>}
       <h1>Profile</h1>
       <p>Email: {user?.email}</p>

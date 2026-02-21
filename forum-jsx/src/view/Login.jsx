@@ -12,7 +12,7 @@ function Login() {
 
   const navigate = useNavigate();
   //add handle submit
-  const handleSubmit = async (e) => { 
+  const handleSubmit = async (e) => {
     e.preventDefault();
     try {
       await signInWithEmailAndPassword(auth, email, password);
@@ -23,7 +23,7 @@ function Login() {
   };
 
   return (
-    <div>
+    <div className="">
       <h1>Login Page</h1>
       <form className="max-w-md mx-auto p-4" onSubmit={handleSubmit}>
         <div className="mb-4">

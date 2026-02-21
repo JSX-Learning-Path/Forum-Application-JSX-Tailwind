@@ -4,8 +4,10 @@ import { db, auth } from "../config/firebase-config";
 import { ref, push } from "firebase/database";
 import React from "react";
 import toast from "react-hot-toast";
+import { useNavigate } from "react-router-dom";
 
 function Create() {
+  const navigate = useNavigate();
   const [user] = useAuthState(auth);
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
@@ -32,6 +34,7 @@ function Create() {
       setContent("");
       setError("");
       toast.success("Post created successfully!");
+      navigate("/");
     } catch (error) {
       setError(`Failed to create post. ${error.message}`);
     } finally {

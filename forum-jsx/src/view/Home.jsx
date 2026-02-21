@@ -31,10 +31,10 @@ const Home = () => {
 
   if (loading) return <p className="loading-msg">Loading posts...</p>;
   return (
-    <div className="">
-      <h2>Posts</h2>
+    <div className="grid grid-rows-4 gap-4 p-4">
+      <h2 className="text-2xl font-bold">Posts</h2>
       {posts.length === 0 && <p className="empty-msg">No posts published.</p>}
-      <div className="post-grid">
+      <div className="flex flex-col gap-4">
         {posts.map((post) => (
           <div key={post.id} className="post-card">
             <h3>{post.title}</h3>

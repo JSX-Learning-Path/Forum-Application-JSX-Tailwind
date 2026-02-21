@@ -4,6 +4,7 @@ import { useAuthState } from "react-firebase-hooks/auth";
 import { auth } from "../config/firebase-config.js";
 import { signOut } from "firebase/auth";
 import ProfileView from "../view/ProfileView.jsx";
+import image from "../assets/image.png";
 // import { useAppContext } from "../context/AppContext";
 
 function Header() {
@@ -17,8 +18,13 @@ function Header() {
   console.log("User in Header:", user);
   return (
     <header>
-      <nav className="bg-teal-200/60 p-4 ">
-        <ul className=" flex flex-row ">
+      <nav className="flex bg-sky-100 p-4 justify-between items-center border-b-2 border-gray-200">
+        <span>
+          <Link to="/">
+            <img src={image} alt="Logo" className="h-20 bg-transparent" />
+          </Link>
+        </span>
+        <ul className=" flex flex-row  gap-5 mr-10 text-xl text-black ">
           <li>
             <Link to="/" className="">
               Home
