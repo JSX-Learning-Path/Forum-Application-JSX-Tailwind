@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { db, auth } from "../config/firebase-config";
-import { ref, push, update} from "firebase/database";
+import { ref, push, update } from "firebase/database";
 import React from "react";
 import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
@@ -35,28 +35,28 @@ function Create() {
       });
     }
   }, [user]);
-      const handleUpload=(e)=>{
-      setPictureFile(e.target.files[0]);
-    }
+  const handleUpload = (e) => {
+    setPictureFile(e.target.files[0]);
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (title.trim() === "" || content.trim() === "") {
       toast.error("Title and Content cannot be empty.");
-       let profilePicUrl = profilePicture;
-          if (pictureFile) {
-            const storage = getStorage();
-            const picRef = storageRef(storage, `profilePictures/${user.uid}`);
-            await uploadBytes(picRef, pictureFile);
-            profilePicUrl = await getDownloadURL(picRef);
-          }
-          await update(ref(db, `/users/${user.uid}`), {
-            // bio: bio,
-            profilePicture: profilePicUrl,
-          });
-          setProfilePicture(profilePicUrl);
-          // setShowEdit(false);
-          setPictureFile(null);
+      let profilePicUrl = profilePicture;
+      if (pictureFile) {
+        const storage = getStorage();
+        const picRef = storageRef(storage, `profilePictures/${user.uid}`);
+        await uploadBytes(picRef, pictureFile);
+        profilePicUrl = await getDownloadURL(picRef);
+      }
+      await update(ref(db, `/users/${user.uid}`), {
+        // bio: bio,
+        profilePicture: profilePicUrl,
+      });
+      setProfilePicture(profilePicUrl);
+      // setShowEdit(false);
+      setPictureFile(null);
       return;
     }
 
@@ -65,8 +65,6 @@ function Create() {
     //   setProfilePicture(userData?.profilePicture || "");
     //   setShowEdit(true);
     // };
-
-
 
     setLoading(true);
     try {
@@ -115,9 +113,9 @@ function Create() {
         onChange={(e) => setContent(e.target.value)}
         className="w-full mb-2 p-2 border"
       />
-<button type="button" onC>
-<input type="file" accept="image/*" onChange={handleUpload}></input>
-</button>
+      <button type="button" className="px-4 py-2 bg-gray-500 text-white mb-2 ">
+        <input type="file" accept="image/*" onChange={handleUpload}></input>
+      </button>
       <button
         type="submit"
         disabled={loading}

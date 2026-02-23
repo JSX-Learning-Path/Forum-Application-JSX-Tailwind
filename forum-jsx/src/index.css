@@ -1,1 +1,9 @@
 @import "tailwindcss";
+
+:root {
+  --color-charcoal: #2d3436;
+  --color-gray: #dfe6e9;
+  --color-gold: #fdcb6e;
+  --color-night: #1e272e;
+  --color-soft-gray: #4a4a4a;
+}

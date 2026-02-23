@@ -6,11 +6,11 @@ import { signOut } from "firebase/auth";
 import image from "../assets/image.png";
 import { getUserByHandle } from "../service/users.js";
 
-function Header() {
+function Header({ posts = [] }) {
   const [user] = useAuthState(auth);
   // const [user] = useAuthState(auth);
   const [userData, setUserData] = useState(null);
-  
+  const [searchTerm, setSearchTerm] = useState("");
 
   useEffect(() => {
     if (user?.uid) {
@@ -21,28 +21,60 @@ function Header() {
     }
   }, [user]);
 
-  
   const handleLogOut = async () => {
     signOut(auth).catch(() => {
       console.log("Error logging out");
     });
   };
+  const filteredPosts = posts.filter((post) => {
+    return (
+      post.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      post.content.toLowerCase().includes(searchTerm.toLowerCase())
+    );
+  });
   console.log("User in Header:", user);
   return (
-    <header>
-      <nav className="flex bg-sky-100 p-4 justify-between items-center border-b-2 border-gray-200">
+    <header className="bg-indigo-50/50 shadow-md">
+      <nav className="flex p-4 justify-between items-center text-gray-800 ">
         <span>
           <Link to="/">
-            <img src={image} alt="Logo" className="h-20 bg-transparent" />
+            <img src={image} alt="Logo" className="h-20 " />
           </Link>
         </span>
-        <ul className=" flex flex-row  gap-5 mr-10 text-xl text-black ">
+        {/* Search input */}
+        <div className="flex-1 flex justify-center relative">
+          <input
+            type="text"
+            className="border p-2 w-full max-w-xs rounded"
+            placeholder="Search posts..."
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+          />
+          {searchTerm && (
+            <div className="absolute top-12 left-1/2 -translate-x-1/2 bg-white shadow-lg rounded w-full max-w-xs z-10">
+              {filteredPosts.length === 0 ? (
+                <span className="block p-2 text-gray-500">Not found</span>
+              ) : (
+                filteredPosts.map((post) => (
+                  <Link
+                    key={post.id}
+                    to={`/post/${post.id}`}
+                    className="block p-2 border-b last:border-b-0 hover:bg-sky-100"
+                  >
+                    <h4 className="font-bold">{post.title}</h4>
+                    <p className="text-sm truncate">{post.content}</p>
+                  </Link>
+                ))
+              )}
+            </div>
+          )}
+        </div>
+        <ul className="flex flex-row gap-5 mr-10 text-xl text-shadow-red-500">
           <li>
             <Link to="/" className="">
               Home
             </Link>
           </li>
-
           <li>
             <Link to="/register" className="">
               Register
@@ -53,7 +85,6 @@ function Header() {
               Create
             </Link>
           </li>
-
           {userData && userData.profilePicture ? (
             <li>
               <Link to="/profile" className="">
@@ -75,7 +106,7 @@ function Header() {
               </Link>
             </li>
           ) : null}
-          
+
           {user ? (
             <button onClick={handleLogOut}>Logout</button>
           ) : (
@@ -85,6 +116,9 @@ function Header() {
           )}
         </ul>
       </nav>
+      {/* Field for search */}
+      <div className="flex justify-center mt-4 relative"></div>
+      {/* Results from search */}
     </header>
   );
 }
