@@ -52,16 +52,16 @@ const Home = () => {
 
   if (loading) return <p className="loading-msg">Loading posts...</p>;
   return (
-    <div className="grid grid-col-2 gap-4 p-4 min-h-screen bg-gradient-to-r from-indigo-100/50 to-pink-100/30">
-      <h2 className="text-4xl font-bold text-center text-gray-700">
+    <div className="grid grid-col-2 gap-4 p-4 min-h-screen bg-gradient-to-r from-indigo-100/50 to-pink-100/30 ">
+      <h2 className="text-4xl font-bold text-center text-gray-700 inset-0">
         Today's Posts
       </h2>
       {posts.length === 0 && <p className="empty-msg">No posts published.</p>}
-      <div className="flex flex-col gap-4 ">
+      <div className="flex flex-col gap-4  ">
         {posts.map((post) => (
           <div
             key={post.id}
-            className="post-card bg-gradient-to-r from-pink-100/20 to-indigo-100/30 shadow-md p-4 rounded max-w-3xl"
+            className="post-card bg-gradient-to-r from-pink-100/20 to-indigo-100/30 shadow-lg p-4 rounded max-w-3xl "
           >
             {editingPostId === post.id ? (
               <form
@@ -105,8 +105,11 @@ const Home = () => {
               </form>
             ) : (
               <>
-                <h3 className="text-2xl font-bold mb-5">{post.title}</h3>
-                <p className="bg-gray-300/30 py-5  rounded">{post.content}</p>
+                <h3 className="text-2xl font-bold mb-5 bg-gradient-to-l from-pink-900/20 to-gray-700/70 bg-clip-text text-transparent">
+                  {post.title}
+                </h3>
+                <small>Author: {post.authorName}</small>
+                <p className="bg-gray-200/30 p-3  rounded">{post.content}</p>
                 {post.picture && (
                   <img
                     src={post.picture}
@@ -114,8 +117,7 @@ const Home = () => {
                     className="post-image"
                   />
                 )}
-                <div className="post-meta">
-                  <small>Author: {post.authorName}</small>
+                <div className="post-meta mt-5 flex items-center justify-end">
                   {post.createdAt && (
                     <small>
                       {new Date(post.createdAt).toLocaleDateString("bg-BG")}
@@ -143,10 +145,10 @@ const Home = () => {
                     >
                       {isLiked[post.id] ? "❤️" : "🤍"}
                     </span>
-                    <span className="ml-2">{countLiked[post.id]} Like</span>
+                    <span className="ml-2">{countLiked[post.id]}</span>
                   </button>
                   <button
-                    className="ml-4 py-1 px-2 rounded"
+                    className="ml-4 py-1 px-2 rounded bg-red-500/90 text-white"
                     onClick={async () => {
                       const postRef = ref(db, `posts/${post.id}`);
                       await remove(postRef);
