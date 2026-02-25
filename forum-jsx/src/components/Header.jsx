@@ -35,7 +35,7 @@ function Header({ posts = [] }) {
   console.log("User in Header:", user);
   return (
     <header className="bg-indigo-50/50 shadow-md">
-      <nav className="flex p-4 justify-between items-center text-gray-800 ">
+      <nav className="flex p-4 justify-center items-center text-gray-800 gap-10 ">
         <span>
           <Link to="/">
             <img src={image} alt="Logo" className="h-20 " />
@@ -69,7 +69,7 @@ function Header({ posts = [] }) {
             </div>
           )}
         </div>
-        <ul className="flex flex-row gap-5 mr-10 text-xl text-shadow-red-500">
+        <ul className="flex flex-row gap-5 mr-10 text-xl text-shadow-red-500 ">
           <li>
             <Link to="/" className="">
               Home
@@ -91,7 +91,7 @@ function Header({ posts = [] }) {
                 <img
                   src={userData.profilePicture}
                   alt="Profile"
-                  className="rounded-full w-10 h-10 object-cover border"
+                  className="rounded-full w-10 h-10  border-none object-cover"
                 />
               </Link>
             </li>

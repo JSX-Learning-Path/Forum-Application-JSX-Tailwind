@@ -79,7 +79,7 @@ function Register() {
   };
 
   return (
-    <div className="flex max-w-md mx-auto p-4 bg-sky-100  flex-col gap-5 rounded ">
+    <div className="flex max-w-md mx-auto p-4 bg-sky-100/70  flex-col gap-5 rounded mt-20">
       <h1 className="text-center text-3xl ">Register</h1>
       <p className="text-center">It's free and easy</p>
       <form onSubmit={handleSubmit} className="m-5">
@@ -90,7 +90,7 @@ function Register() {
           placeholder="Username"
           onChange={(e) => setUsername(e.target.value)}
           required
-          className="mb-3 p-2  w-full  bg-white"
+          className="mb-3 p-2  w-full  bg-white rounded"
         />
         <br />
         <label>Email:</label>
@@ -100,7 +100,7 @@ function Register() {
           placeholder=" Type your email Email"
           onChange={(e) => setEmail(e.target.value)}
           required
-          className="mb-3 p-2  w-full bg-white"
+          className="mb-3 p-2  w-full bg-white rounded"
         />
         <br />
         <label>Password:</label>
@@ -110,7 +110,7 @@ function Register() {
           placeholder=" Type your password"
           onChange={(e) => setPassword(e.target.value)}
           required
-          className="mb-3 p-2  w-full bg-white"
+          className="mb-3 p-2  w-full bg-white rouded"
         />
         <br />
         <label>Confirm Password:</label>
@@ -126,7 +126,7 @@ function Register() {
         <button
           type="submit"
           disabled={loading}
-          className="bg-sky-600/70 text-white font-bold py-2 px-4 rounded w-full transition-all duration-400 text-lg cursor-pointer"
+          className="bg-sky-700/70 text-white font-bold py-2 px-4 rounded w-full transition-all duration-400 text-lg cursor-pointer"
         >
           {loading ? "Loading..." : "Register"}
         </button>

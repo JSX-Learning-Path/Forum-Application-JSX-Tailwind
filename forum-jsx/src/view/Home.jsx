@@ -114,7 +114,7 @@ const Home = () => {
                   <img
                     src={post.picture}
                     alt={post.title}
-                    className="post-image"
+                    className="post-image max-w-[150px] max-h-[150px] mt-10"
                   />
                 )}
                 <div className="post-meta mt-5 flex items-center justify-end">

@@ -34,14 +34,14 @@ function Socials() {
     <div className="flex flex-col gap-3 mt-2">
       <button
         onClick={handleGoogleLogin}
-        className="bg-white py-2 px-4 rounded"
+        className="bg-white py-2 px-4 rounded flex items-center justify-center"
       >
         <img src={googleLogo} alt="Google" className="inline w-5 mr-2" />
         Sign in with Google
       </button>
       <button
         onClick={handleFacebookLogin}
-        className="bg-white py-2 px-4 rounded"
+        className="bg-white py-2 px-4 rounded flex items-center justify-center"
       >
         <img src={facebookLogo} alt="Facebook" className="inline w-5 mr-2" />
         Sign in with Facebook
