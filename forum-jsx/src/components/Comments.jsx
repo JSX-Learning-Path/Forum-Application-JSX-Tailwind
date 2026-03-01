@@ -38,9 +38,8 @@ function Comments({ postId }) {
   const handleAddComment = async () => {
     if (newComment.trim() === "") return;
     const comment = {
-      id: Date.now().toString(),
       postId: postId,
-      author: userData ? userData.displayName : "Anonymous",
+      author: userData ? userData.displayName || "Anonymous" : "Anonymous",
       content: newComment,
       createAt: new Date().toISOString(),
       likes: 0,
@@ -53,8 +52,10 @@ function Comments({ postId }) {
     setNewComment("");
   };
   const handleDeleteComment = async (commentId) => {
-    const commentRef = ref(db, `posts/${postId}/comments/${commentId}`);
-    await remove(commentRef);
+    if (window.confirm("Are you sure you want to delete this comment?")) {
+      const commentRef = ref(db, `posts/${postId}/comments/${commentId}`);
+      await remove(commentRef);
+    }
   };
 
   return (
@@ -74,9 +75,12 @@ function Comments({ postId }) {
         <div key={comment.id}>
           <span>{comment.author}</span>
           <span>{comment.content}</span>
-          <Button onClick={() => handleDeleteComment(comment.id)}>
-            Delete
-          </Button>
+          {userData &&
+            comment.author === (userData.displayName || "Anonymous") && (
+              <button onClick={() => handleDeleteComment(comment.id)}>
+                Delete
+              </button>
+            )}
         </div>
       ))}
     </div>
