@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { onValue } from "firebase/database";
+import { onValue, remove } from "firebase/database";
 import { auth, db } from "../config/firebase-config";
 import { ref, push } from "firebase/database";
 import Button from "./Button.jsx";
@@ -40,7 +40,7 @@ function Comments({ postId }) {
     const comment = {
       id: Date.now().toString(),
       postId: postId,
-      author: userData ? userData.displayName || "Anonymous" : "Anonymous",
+      author: userData ? userData.displayName : "Anonymous",
       content: newComment,
       createAt: new Date().toISOString(),
       likes: 0,
@@ -52,10 +52,15 @@ function Comments({ postId }) {
     await push(commentsRef, comment);
     setNewComment("");
   };
+  const handleDeleteComment = async (commentId) => {
+    const commentRef = ref(db, `posts/${postId}/comments/${commentId}`);
+    await remove(commentRef);
+  };
 
   return (
     <div>
       <h3>Comment</h3>
+
       <div>
         <input
           type="text"
@@ -69,6 +74,9 @@ function Comments({ postId }) {
         <div key={comment.id}>
           <span>{comment.author}</span>
           <span>{comment.content}</span>
+          <Button onClick={() => handleDeleteComment(comment.id)}>
+            Delete
+          </Button>
         </div>
       ))}
     </div>
