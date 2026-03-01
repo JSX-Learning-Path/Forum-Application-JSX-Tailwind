@@ -90,7 +90,7 @@ function Register() {
           placeholder="Username"
           onChange={(e) => setUsername(e.target.value)}
           required
-          className="mb-3 p-2  w-full  bg-white rounded"
+          className="mb-3 p-2  w-full  bg-white rounded "
         />
         <br />
         <label>Email:</label>
