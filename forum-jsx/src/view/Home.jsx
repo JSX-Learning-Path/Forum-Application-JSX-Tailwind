@@ -10,6 +10,7 @@ import {
 import { useEffect, useState } from "react";
 // import { getAllPosts } from "../service/posts";
 import { db } from "../config/firebase-config";
+import Comment from "../components/Comments.jsx";
 // import { getAuth } from "firebase/auth";
 
 const Home = () => {
@@ -17,7 +18,7 @@ const Home = () => {
   const [loading, setLoading] = useState(true);
   const [isLiked, setIsLiked] = useState({});
   const [countLiked, setCountLiked] = useState({});
-  const [deleted, isDeleted] = useState({});
+  const [, isDeleted] = useState({});
   const [editingPostId, setEditingPostId] = useState(null);
   const [editTitle, setEditTitle] = useState("");
   const [editContent, setEditContent] = useState("");
@@ -170,6 +171,7 @@ const Home = () => {
                 </div>
               </>
             )}
+            <Comment postId={post.id} comments={post.comments || []} />
           </div>
         ))}
       </div>
