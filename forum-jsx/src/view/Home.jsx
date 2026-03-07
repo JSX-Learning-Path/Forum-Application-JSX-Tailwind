@@ -11,10 +11,13 @@ import { useEffect, useState } from "react";
 // import { getAllPosts } from "../service/posts";
 import { db } from "../config/firebase-config";
 import Comment from "../components/Comments.jsx";
+import { useAuthState } from "react-firebase-hooks/auth";
+import { auth } from "../config/firebase-config";
 // import { getAuth } from "firebase/auth";
 
 const Home = () => {
   const [posts, setPosts] = useState([]);
+  const [user] = useAuthState(auth);
   const [loading, setLoading] = useState(true);
   const [isLiked, setIsLiked] = useState({});
   const [countLiked, setCountLiked] = useState({});
@@ -148,30 +151,39 @@ const Home = () => {
                     </span>
                     <span className="ml-2">{countLiked[post.id]}</span>
                   </button>
-                  <button
-                    className="ml-4 py-1 px-2 rounded bg-red-500/90 text-white"
-                    onClick={async () => {
-                      const postRef = ref(db, `posts/${post.id}`);
-                      await remove(postRef);
-                      isDeleted((prev) => ({ ...prev, [post.id]: true }));
-                    }}
-                  >
-                    Delete
-                  </button>
-                  <button
-                    className="ml-5 bg-blue-500 text-white py-1 px-2 rounded"
-                    onClick={() => {
-                      setEditingPostId(post.id);
-                      setEditTitle(post.title);
-                      setEditContent(post.content);
-                    }}
-                  >
-                    Edit
-                  </button>
+                  {user && user.uid === post.authorId && (
+                    <>
+                      <button
+                        className="ml-4 py-1 px-2 rounded bg-red-500/90 text-white"
+                        onClick={async () => {
+                          const postRef = ref(db, `posts/${post.id}`);
+                          await remove(postRef);
+                          isDeleted((prev) => ({ ...prev, [post.id]: true }));
+                        }}
+                      >
+                        Delete
+                      </button>
+                      <button
+                        className="ml-5 bg-blue-500 text-white py-1 px-2 rounded"
+                        onClick={() => {
+                          setEditingPostId(post.id);
+                          setEditTitle(post.title);
+                          setEditContent(post.content);
+                        }}
+                      >
+                        Edit
+                      </button>
+                    </>
+                  )}
                 </div>
               </>
             )}
-            <Comment postId={post.id} comments={post.comments || []} />
+            <div className="flex items-center gap-2 mt-2">
+              <span className="text-sm text-gray-500 font-medium">
+                {post.comments ? Object.keys(post.comments).length : 0} коментара
+              </span>
+            </div>
+            <Comment postId={post.id} postAuthorId={post.authorId} comments={post.comments || []} />
           </div>
         ))}
       </div>

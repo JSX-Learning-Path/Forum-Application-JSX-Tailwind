@@ -75,44 +75,40 @@ function Header({ posts = [] }) {
               Home
             </Link>
           </li>
-          <li>
-            <Link to="/register" className="">
-              Register
-            </Link>
-          </li>
-          <li>
-            <Link to="/create" className="">
-              Create
-            </Link>
-          </li>
-          {userData && userData.profilePicture ? (
-            <li>
-              <Link to="/profile" className="">
-                <img
-                  src={userData.profilePicture}
-                  alt="Profile"
-                  className="rounded-full w-10 h-10  border-none object-cover"
-                />
-              </Link>
-            </li>
-          ) : user ? (
-            <li>
-              <Link to="/profile" className="">
-                <img
-                  src={image}
-                  alt="Default Profile"
-                  className="rounded-full w-10 h-10 object-cover border"
-                />
-              </Link>
-            </li>
-          ) : null}
-
-          {user ? (
-            <button onClick={handleLogOut}>Logout</button>
-          ) : (
-            <Link to="/login" className="">
-              Login
-            </Link>
+          {!user && (
+            <>
+              <li>
+                <Link to="/register" className="">
+                  Register
+                </Link>
+              </li>
+              <li>
+                <Link to="/login" className="">
+                  Login
+                </Link>
+              </li>
+            </>
+          )}
+          {user && (
+            <>
+              <li>
+                <Link to="/create" className="">
+                  Create
+                </Link>
+              </li>
+              <li>
+                <Link to="/profile" className="">
+                  <img
+                    src={userData && userData.profilePicture ? userData.profilePicture : image}
+                    alt="Profile"
+                    className="rounded-full w-10 h-10 object-cover border"
+                  />
+                </Link>
+              </li>
+              <li>
+                <button onClick={handleLogOut}>Logout</button>
+              </li>
+            </>
           )}
         </ul>
       </nav>

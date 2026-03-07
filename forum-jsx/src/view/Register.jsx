@@ -12,9 +12,9 @@ function Register() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
-  const [error, setError] = useState("");
+  // const [error, setError] = useState(""); //излишен код
   const [loading, setLoading] = useState(false);
-  const [, setSuccess] = useState(false);
+  // const [, setSuccess] = useState(false);//излишен код
   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
@@ -108,6 +108,7 @@ function Register() {
           type="password"
           value={password}
           placeholder=" Type your password"
+          autoComplete="new-password"
           onChange={(e) => setPassword(e.target.value)}
           required
           className="mb-3 p-2  w-full bg-white rouded"
@@ -121,6 +122,7 @@ function Register() {
           onChange={(e) => setConfirmPassword(e.target.value)}
           required
           className="mb-3 p-2  w-full bg-white"
+          autoComplete="new-password"
         />
         <br />
         <button
