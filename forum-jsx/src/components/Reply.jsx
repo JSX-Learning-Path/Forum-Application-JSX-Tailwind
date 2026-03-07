@@ -120,12 +120,17 @@ const Reply = ({
           <button className="text-gray-400 font-bold" onClick={() => setEditMode(false)}>Отказ</button>
         </div>
       ) : (
-        <span className="ml-2 text-gray-700 text-sm">
-          {reply.hidden && user && user.uid === postAuthorId && (
-            <span className="text-yellow-700 text-xs mr-2">(Скрит отговор)</span>
-          )}
-          {reply.content}
-        </span>
+        <>
+          <span className="ml-2 text-gray-700 text-sm">
+            {reply.hidden && user && user.uid === postAuthorId && (
+              <span className="text-yellow-700 text-xs mr-2">(Скрит отговор)</span>
+            )}
+            {reply.content}
+          </span>
+          <div className="text-xs text-gray-400 mt-1">
+            {reply.createAt ? new Date(reply.createAt).toLocaleString('bg-BG', { dateStyle: 'medium', timeStyle: 'short' }) : ''}
+          </div>
+        </>
       )}
       <div className="flex gap-2 mt-2 items-center">
         <button

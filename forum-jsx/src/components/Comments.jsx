@@ -222,12 +222,17 @@ function Comments({ postId, postAuthorId }) {
                     <button className="text-gray-400 font-bold" onClick={() => setEditId(null)}>Отказ</button>
                   </div>
                 ) : (
-                  <span className="text-gray-800 text-base break-words">
-                    {comment.hidden && user && user.uid === postAuthorId && (
-                      <span className="text-yellow-700 text-xs mr-2">(Скрит коментар)</span>
-                    )}
-                    {comment.content}
-                  </span>
+                  <>
+                    <span className="text-gray-800 text-base break-words">
+                      {comment.hidden && user && user.uid === postAuthorId && (
+                        <span className="text-yellow-700 text-xs mr-2">(Скрит коментар)</span>
+                      )}
+                      {comment.content}
+                    </span>
+                    <div className="text-xs text-gray-400 mt-1">
+                      {comment.createAt ? new Date(comment.createAt).toLocaleString('bg-BG', { dateStyle: 'medium', timeStyle: 'short' }) : ''}
+                    </div>
+                  </>
                 )}
                 <div className="flex gap-2 mt-2 items-center">
                   <button
@@ -273,6 +278,7 @@ function Comments({ postId, postAuthorId }) {
                           replyId={replyId}
                           reply={reply}
                           postAuthorId={postAuthorId}
+                          showDate={true}
                         />
                       ))}
                   </div>
